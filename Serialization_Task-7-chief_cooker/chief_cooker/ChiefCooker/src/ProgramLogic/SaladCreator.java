@@ -36,6 +36,11 @@ public class SaladCreator {
         return logician.getVegByCaloriesInterval(salad, from, to);
     }
 
+    public void removeVegetables(Salad salad, String name, int amount) {
+        chef.removeVegetables(salad, name, amount);
+    }
+
+
     private class Logician {
 
         private Vegetable getVegByCaloriesInterval(Salad salad, double from, double to) {
@@ -91,6 +96,20 @@ public class SaladCreator {
                 }
             } else System.out.println((char) 27 + "[31mSalad not found");
             return salad;
+        }
+
+
+        private void removeVegetables(Salad salad, String name, int amount) {
+            if (salad.isExist()) {
+                while (amount > 0) {
+                    for (Vegetable vegetable : salad.getVegetables()) {
+                        if (vegetable.getName().equalsIgnoreCase(name)) {
+                            salad.getVegetables().remove(vegetable);
+                            amount--;
+                        }
+                    }
+                }
+            } else System.out.println((char) 27 + "[31mSalad not found");
         }
     }
 }

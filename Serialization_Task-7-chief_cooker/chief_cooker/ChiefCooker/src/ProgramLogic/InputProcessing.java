@@ -3,6 +3,8 @@ package ProgramLogic;
 import ProgramLogic.Subjects.Salad;
 import ProgramLogic.Subjects.Vegetables.*;
 
+import java.util.List;
+
 public class InputProcessing {
 
     public static boolean generalQuestion(String answer) {
@@ -61,6 +63,27 @@ public class InputProcessing {
                     new Connector().writeObject("leafy", vegetable);
                 }
                 default -> System.out.println("Vegetable " + type + " not found");
+            }
+        } else System.out.println((char) 27 + "[31mSalad not found");
+
+    }
+
+    public static void removeVegsByParam(Salad salad, String name, String amount) {
+
+        int quantity = 0;
+        name = name.trim().toLowerCase();
+
+        try {
+            quantity = Integer.parseInt(amount);
+        } catch (ClassCastException ex) {
+            ex.printStackTrace();
+        }
+
+        if (salad.isExist()) {
+            for(Vegetable vegetable : salad.getVegetables()){
+                if(vegetable.getName().equalsIgnoreCase(name)){
+                    new SaladCreator().removeVegetables(salad, name, quantity);
+                }
             }
         } else System.out.println((char) 27 + "[31mSalad not found");
 

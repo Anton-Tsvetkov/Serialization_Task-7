@@ -23,6 +23,84 @@ public class Terminal {
         String answer;
         do {
             System.out.println(extractResults);
+            if (!extractResults.equalsIgnoreCase("Salad not found")) {
+                System.out.println("Do you want change your salad? (y/n)");
+                answer = scanner.nextLine();
+                if (InputProcessing.generalQuestion(answer)) {
+                    System.out.println("""
+                            What changes do you want make?
+                            a) Add vegetables
+                            b) Remove vegetables
+                            (please select the letter)
+                            """);
+                    answer = scanner.nextLine();
+                    answer = answer.
+                            trim().
+                            toLowerCase().
+                            replaceAll("\\)", "");
+
+                    switch (answer) {
+                        case "a" -> {
+                            do {
+                                System.out.println("Please select vegetable type: ");
+                                System.out.println("""
+                                        Bulbous
+                                        Flowering
+                                        Fruit
+                                        Leafy
+                                        Roots
+                                        """);
+                                String type = scanner.nextLine();
+                                type = type.trim().toLowerCase();
+                                System.out.println("Print vegetable's parameters in the following order: \n" + confParamOrder);
+                                answer = scanner.nextLine();
+                                System.out.println("And amount of them (digit): ");
+                                String amount = scanner.nextLine();
+                                InputProcessing.addVegsByParam(salad, type, answer, amount);
+
+                                saladCreator.calculateCalories(salad);
+                                saladCreator.sortByCalorie(salad);
+                                new Connector().writeObject(salad);
+                                System.out.println(salad);
+
+                                System.out.println("More vegetables? (y/n)");
+                                answer = scanner.nextLine();
+
+                            } while (InputProcessing.generalQuestion(answer));
+                            new Connector().writeObject(salad);
+                        }
+                        case "b" -> {
+                            do {
+                                System.out.println("Please select vegetable type: ");
+                                System.out.println("""
+                                        Bulbous
+                                        Flowering
+                                        Fruit
+                                        Leafy
+                                        Roots
+                                        """);
+                                String type = scanner.nextLine();
+                                type = type.trim().toLowerCase();
+                                System.out.println("Print vegetable's name: ");
+                                answer = scanner.nextLine();
+                                System.out.println("And amount of them (digit): ");
+                                String amount = scanner.nextLine();
+                                InputProcessing.removeVegsByParam(salad, answer, amount);
+
+                                saladCreator.calculateCalories(salad);
+                                saladCreator.sortByCalorie(salad);
+                                new Connector().writeObject(salad);
+                                System.out.println(salad);
+
+                                System.out.println("More vegetables? (y/n)");
+                                answer = scanner.nextLine();
+
+                            } while (InputProcessing.generalQuestion(answer));
+                            new Connector().writeObject(salad);
+                        }
+                    }
+                }
+            }
             System.out.println("Do you want create a new salad? (y/n)");
             answer = scanner.nextLine();
             if (InputProcessing.generalQuestion(answer)) {
