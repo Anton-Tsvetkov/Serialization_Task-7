@@ -60,4 +60,24 @@ public class InputProcessing {
             }
         } else System.out.println((char) 27 + "[31mAppliances not found");
     }
+
+
+    public static void removeAppsByParam(House house, String name, String amount){
+        int quantity = 0;
+        name = name.trim().toLowerCase();
+
+        try {
+            quantity = Integer.parseInt(amount);
+        } catch (ClassCastException ex) {
+            ex.printStackTrace();
+        }
+
+        if (house.isExist()) {
+            for(HomeElectrical homeElectrical : house.getElectricalAppliances()){
+                if(homeElectrical.getName().equalsIgnoreCase(name)){
+                    new ElectricalPanel().removeAppliances(house, name, quantity);
+                }
+            }
+        } else System.out.println((char) 27 + "[31mHouse not found");
+    }
 }

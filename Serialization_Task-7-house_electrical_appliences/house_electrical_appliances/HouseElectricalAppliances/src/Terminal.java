@@ -23,6 +23,73 @@ public class Terminal {
 
         String answer = "answer";
         do {
+            System.out.println(extractResults);
+            if (!extractResults.equalsIgnoreCase("House not found")) {
+                System.out.println("Do you want change your house? (y/n)");
+                answer = scanner.nextLine();
+                if (InputProcessing.generalQuestion(answer)) {
+                    System.out.println("""
+                            What changes do you want make?
+                            a) Add appliances
+                            b) Remove appliances
+                            (please select the letter)
+                            """);
+                    answer = scanner.nextLine();
+                    answer = answer.
+                            trim().
+                            toLowerCase().
+                            replaceAll("\\)", "");
+
+                    switch (answer) {
+                        case "a" -> {
+                            do {
+                                System.out.println("Please select electrical appliance type: ");
+                                System.out.println("""
+                                        Appliances
+                                        Audio
+                                        Video
+                                        """);
+                                String type = scanner.nextLine();
+                                type = type.trim().toLowerCase();
+                                System.out.println("Print appliance's parameters in the following order: \n" + confParamOrder);
+                                answer = scanner.nextLine();
+                                System.out.println("And amount of them (digit): ");
+                                String amount = scanner.nextLine();
+                                InputProcessing.addSweetByParam(house, type, answer, amount);
+
+                                electricalPanel.calculateConsumption(house);
+                                electricalPanel.sortByConsumption(house);
+                                new Connector().writeObject(house);
+                                System.out.println(house);
+
+                                System.out.println("More electrical appliances? (y/n)");
+                                answer = scanner.nextLine();
+
+                            } while (InputProcessing.generalQuestion(answer));
+                            new Connector().writeObject(house);
+                        }
+                        case "b" -> {
+                            do {
+                                System.out.println("Print appliances's name: ");
+                                answer = scanner.nextLine();
+                                System.out.println("And amount of them (digit): ");
+                                String amount = scanner.nextLine();
+                                InputProcessing.removeAppsByParam(house, answer, amount);
+
+                                electricalPanel.calculateConsumption(house);
+                                electricalPanel.sortByConsumption(house);
+                                new Connector().writeObject(house);
+                                System.out.println(house);
+
+                                System.out.println("More appliances? (y/n)");
+                                answer = scanner.nextLine();
+
+                            } while (InputProcessing.generalQuestion(answer));
+                            new Connector().writeObject(house);
+                        }
+                    }
+                }
+            }
             System.out.println("It's electrical time!");
             do {
                 System.out.println("Please select electrical appliance type: ");

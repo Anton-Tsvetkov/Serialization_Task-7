@@ -41,6 +41,11 @@ public class ElectricalPanel {
         return logician.getONorOFFApp(house, power);
     }
 
+
+    public void removeAppliances(House house, String name, int amount){
+        electrician.removeAppliances(house, name, amount);
+    }
+
     private class Logician {
 
         private HomeElectrical getAppByConsumptionInterval(House house, double from, double to) {
@@ -110,6 +115,20 @@ public class ElectricalPanel {
                 }
             } else System.out.println((char) 27 + "[31mHouse not found");
             return house;
+        }
+
+
+        private void removeAppliances(House house, String name, int amount){
+            if (house.isExist()) {
+                while (amount > 0) {
+                    for (HomeElectrical homeElectrical : house.getElectricalAppliances()) {
+                        if (homeElectrical.getName().equalsIgnoreCase(name)) {
+                            house.getElectricalAppliances().remove(homeElectrical);
+                            amount--;
+                        }
+                    }
+                }
+            } else System.out.println((char) 27 + "[31mHouse not found");
         }
     }
 }
