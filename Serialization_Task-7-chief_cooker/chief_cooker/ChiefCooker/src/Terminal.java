@@ -71,16 +71,6 @@ public class Terminal {
                         }
                         case "b" -> {
                             do {
-                                System.out.println("Please select vegetable type: ");
-                                System.out.println("""
-                                        Bulbous
-                                        Flowering
-                                        Fruit
-                                        Leafy
-                                        Roots
-                                        """);
-                                String type = scanner.nextLine();
-                                type = type.trim().toLowerCase();
                                 System.out.println("Print vegetable's name: ");
                                 answer = scanner.nextLine();
                                 System.out.println("And amount of them (digit): ");
