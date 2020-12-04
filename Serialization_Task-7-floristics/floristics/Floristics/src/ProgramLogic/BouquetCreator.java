@@ -48,6 +48,15 @@ public class BouquetCreator {
         return logician.getFlowerByStemLengthInterval(bouquet, from, to);
     }
 
+
+    public void removeFlower(Bouquet bouquet, String name, int amount){
+        florist.removeFlower(bouquet, name, amount);
+    }
+
+    public void removeAccessory(Bouquet bouquet, String name, int amount){
+        designer.removeAccessory(bouquet, name, amount);
+    }
+
     private class Logician {
 
         private Flower getFlowerByStemLengthInterval(Bouquet bouquet, double from, double to) {
@@ -105,6 +114,20 @@ public class BouquetCreator {
                 }
             } else System.out.println((char) 27 + "[31mBouquet not found");
         }
+
+
+        private void removeAccessory(Bouquet bouquet, String name, int amount){
+            if (bouquet.isExist()) {
+                while (amount > 0) {
+                    for (Accessory accessory : bouquet.getAccessories()) {
+                        if (accessory.getName().equalsIgnoreCase(name)) {
+                            bouquet.getAccessories().remove(accessory);
+                            amount--;
+                        }
+                    }
+                }
+            } else System.out.println("Bouquet not found");
+        }
     }
 
     private class Florist {
@@ -127,6 +150,20 @@ public class BouquetCreator {
                 }
             } else System.out.println((char) 27 + "[31mBouquet not found");
             return bouquet;
+        }
+
+
+        private void removeFlower(Bouquet bouquet, String name, int amount){
+            if (bouquet.isExist()) {
+                while (amount > 0) {
+                    for (Flower flower : bouquet.getFlowers()) {
+                        if (flower.getName().equalsIgnoreCase(name)) {
+                            bouquet.getFlowers().remove(flower);
+                            amount--;
+                        }
+                    }
+                }
+            } else System.out.println("Bouquet not found");
         }
     }
 }

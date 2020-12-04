@@ -66,6 +66,27 @@ public class InputProcessing {
         } else System.out.println((char) 27 + "[31mAccessory not found");
     }
 
+    public static void removeFlowersByParam(Bouquet bouquet, String name, String amount) {
+        int quantity = 0;
+        name = name.trim().toLowerCase();
+
+        try {
+            quantity = Integer.parseInt(amount);
+        } catch (ClassCastException ex) {
+            ex.printStackTrace();
+        }
+
+
+        if (bouquet.isExist()) {
+            for (Flower flower : bouquet.getFlowers()) {
+                if (flower.getName().equalsIgnoreCase(name)) {
+                    new BouquetCreator().removeFlower(bouquet, name, quantity);
+                }
+            }
+        } else System.out.println((char) 27 + "[31mSalad not found");
+    }
+
+
     public static void addAccessoryByParam(Bouquet bouquet, String type, String params, String amount) {
         params = params.
                 trim().
@@ -114,6 +135,26 @@ public class InputProcessing {
                 default -> System.out.println("Accessory " + type + " not found");
             }
         } else System.out.println((char) 27 + "[31mAccessory not found");
+    }
+
+    public static void removeAccessoryByParam(Bouquet bouquet, String name, String amount) {
+
+        int quantity = 0;
+        name = name.trim().toLowerCase();
+
+        try {
+            quantity = Integer.parseInt(amount);
+        } catch (ClassCastException ex) {
+            ex.printStackTrace();
+        }
+
+        if (bouquet.isExist()) {
+            for (Accessory accessory : bouquet.getAccessories()) {
+                if (accessory.getName().equalsIgnoreCase(name)) {
+                    new BouquetCreator().removeAccessory(bouquet, name, quantity);
+                }
+            }
+        } else System.out.println((char) 27 + "[31mSalad not found");
     }
 
 }

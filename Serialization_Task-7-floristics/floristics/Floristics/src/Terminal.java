@@ -25,6 +25,120 @@ public class Terminal {
         String answer = "answer";
         do {
             System.out.println(extractResults);
+            if (!extractResults.equalsIgnoreCase("Bouquet not found")) {
+                System.out.println("Do you want change your bouquet? (y/n)");
+                answer = scanner.nextLine();
+                if (InputProcessing.generalQuestion(answer)) {
+                    System.out.println("""
+                            What changes do you want make?
+                            a) Add flowers
+                            b) Remove flowers
+                                                        
+                            c) Add accessories
+                            d) Remove accessories
+                            (please select the letter)
+                            """);
+                    answer = scanner.nextLine();
+                    answer = answer.
+                            trim().
+                            toLowerCase().
+                            replaceAll("\\)", "");
+
+                    switch (answer) {
+                        case "a" -> {
+                            do {
+                                System.out.println("Please select flower type: ");
+                                System.out.println("""
+                                        Garden
+                                        Indoor
+                                        Wild
+                                        """);
+                                String type = scanner.nextLine();
+                                type = type.trim().toLowerCase();
+                                System.out.println("Print flower's name: ");
+                                answer = scanner.nextLine();
+                                System.out.println("And amount of them (digit): ");
+                                String amount = scanner.nextLine();
+                                InputProcessing.addFlowerByParam(bouquet, type, answer, amount);
+
+                                bouquetCreator.calculateСost(bouquet);
+                                bouquetCreator.sortByFreshness(bouquet);
+                                new Connector().writeObject(bouquet);
+                                System.out.println(bouquet);
+
+                                System.out.println("More flowers? (y/n)");
+                                answer = scanner.nextLine();
+
+                            } while (InputProcessing.generalQuestion(answer));
+                            new Connector().writeObject(bouquet);
+                        }
+                        case "b" -> {
+                            do {
+                                System.out.println("Print flower's name: ");
+                                answer = scanner.nextLine();
+                                System.out.println("And amount of them (digit): ");
+                                String amount = scanner.nextLine();
+                                InputProcessing.removeFlowersByParam(bouquet, answer, amount);
+
+                                bouquetCreator.calculateСost(bouquet);
+                                bouquetCreator.sortByFreshness(bouquet);
+                                new Connector().writeObject(bouquet);
+                                System.out.println(bouquet);
+
+                                System.out.println("More flowers? (y/n)");
+                                answer = scanner.nextLine();
+
+                            } while (InputProcessing.generalQuestion(answer));
+                            new Connector().writeObject(bouquet);
+                        }
+                        case "c" -> {
+                            do {
+                                System.out.println("Please select accessory type: ");
+                                System.out.println("""
+                                        Basket
+                                        Pot
+                                        Tape
+                                        Wrapped paper
+                                        """);
+                                System.out.println();
+                                String type = scanner.nextLine();
+                                System.out.println("Print accessory's parameters in the following order: \n" + accessParamOrder);
+                                answer = scanner.nextLine();
+                                System.out.println("And amount of them: ");
+                                String amount = scanner.nextLine();
+                                InputProcessing.addAccessoryByParam(bouquet, type, answer, amount);
+
+                                bouquetCreator.calculateСost(bouquet);
+                                System.out.println(bouquet);
+
+                                System.out.println("More accessories? (y/n)");
+                                answer = scanner.nextLine();
+
+                            } while (InputProcessing.generalQuestion(answer));
+                            new Connector().writeObject(bouquet);
+                        }
+                        case "d" -> {
+                            do {
+                                System.out.println("Print accessory's name: ");
+                                answer = scanner.nextLine();
+                                System.out.println("And amount of them (digit): ");
+                                String amount = scanner.nextLine();
+                                InputProcessing.removeAccessoryByParam(bouquet, answer, amount);
+
+                                bouquetCreator.calculateСost(bouquet);
+                                bouquetCreator.sortByFreshness(bouquet);
+                                new Connector().writeObject(bouquet);
+                                System.out.println(bouquet);
+
+                                System.out.println("More accessories? (y/n)");
+                                answer = scanner.nextLine();
+
+                            } while (InputProcessing.generalQuestion(answer));
+                            new Connector().writeObject(bouquet);
+                        }
+                    }
+                }
+            }
             System.out.println("Do you want create a bouquet? (y/n)");
             answer = scanner.nextLine();
             if (InputProcessing.generalQuestion(answer)) {
@@ -109,13 +223,13 @@ public class Terminal {
                             }
                             case "b" -> {
                                 try {
-                                System.out.println("Print range of stem lengths: ");
-                                System.out.print("min length: ");
-                                double from = scanner.nextDouble();
-                                System.out.print("max length: ");
-                                double to = scanner.nextDouble();
-                                System.out.println(bouquetCreator.getFlowerByStemLengthInterval(bouquet, from, to));
-                                } catch (ClassCastException ex){
+                                    System.out.println("Print range of stem lengths: ");
+                                    System.out.print("min length: ");
+                                    double from = scanner.nextDouble();
+                                    System.out.print("max length: ");
+                                    double to = scanner.nextDouble();
+                                    System.out.println(bouquetCreator.getFlowerByStemLengthInterval(bouquet, from, to));
+                                } catch (ClassCastException ex) {
                                     ex.printStackTrace();
                                 }
                             }
