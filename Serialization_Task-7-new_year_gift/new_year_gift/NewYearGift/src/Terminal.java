@@ -23,6 +23,74 @@ public class Terminal {
 
         String answer = "answer";
         do {
+            System.out.println(extractResults);
+            if (!extractResults.equalsIgnoreCase("SweetsBox not found")) {
+                System.out.println("Do you want change your SweetsBox? (y/n)");
+                answer = scanner.nextLine();
+                if (InputProcessing.generalQuestion(answer)) {
+                    System.out.println("""
+                            What changes do you want make?
+                            a) Add confections
+                            b) Remove confections
+                            (please select the letter)
+                            """);
+                    answer = scanner.nextLine();
+                    answer = answer.
+                            trim().
+                            toLowerCase().
+                            replaceAll("\\)", "");
+
+                    switch (answer) {
+                        case "a" -> {
+                            do {
+                                System.out.println("Please select confection type: ");
+                                System.out.println("""
+                                        Candy
+                                        Chocolate
+                                        Lollipop
+                                        Wafer
+                                        """);
+                                String type = scanner.nextLine();
+                                type = type.trim().toLowerCase();
+                                System.out.println("Print confection's parameters in the following order: \n" + confParamOrder);
+                                answer = scanner.nextLine();
+                                System.out.println("And amount of them (digit): ");
+                                String amount = scanner.nextLine();
+                                InputProcessing.addSweetByParam(sweetsBox, type, answer, amount);
+
+                                boxCreator.calculateWeight(sweetsBox);
+                                boxCreator.sortBySugar(sweetsBox);
+                                new Connector().writeObject(sweetsBox);
+                                System.out.println(sweetsBox);
+
+                                System.out.println("More confections? (y/n)");
+                                answer = scanner.nextLine();
+
+                            } while (InputProcessing.generalQuestion(answer));
+                            new Connector().writeObject(sweetsBox);
+                        }
+                        case "b" -> {
+                            do {
+                                System.out.println("Print confection's name: ");
+                                answer = scanner.nextLine();
+                                System.out.println("And amount of them (digit): ");
+                                String amount = scanner.nextLine();
+                                InputProcessing.removeConfByParam(sweetsBox, answer, amount);
+
+                                boxCreator.calculateWeight(sweetsBox);
+                                boxCreator.sortBySugar(sweetsBox);
+                                new Connector().writeObject(sweetsBox);
+                                System.out.println(sweetsBox);
+
+                                System.out.println("More confections? (y/n)");
+                                answer = scanner.nextLine();
+
+                            } while (InputProcessing.generalQuestion(answer));
+                            new Connector().writeObject(sweetsBox);
+                        }
+                    }
+                }
+            }
             System.out.println("Do you want create a sweets box? (y/n)");
             answer = scanner.nextLine();
             if (InputProcessing.generalQuestion(answer)) {

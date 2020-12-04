@@ -63,4 +63,24 @@ public class InputProcessing {
             }
         } else System.out.println((char) 27 + "[31mSweetsBox not found");
     }
+
+    public static void removeConfByParam(SweetsBox sweetsBox, String name, String amount){
+
+            int quantity = 0;
+            name = name.trim().toLowerCase();
+
+            try {
+                quantity = Integer.parseInt(amount);
+            } catch (ClassCastException ex) {
+                ex.printStackTrace();
+            }
+
+            if (sweetsBox.isExist()) {
+                for(Confection confection : sweetsBox.getSweets()){
+                    if(confection.getName().equalsIgnoreCase(name)){
+                        new BoxCreator().removeConfections(sweetsBox, name, quantity);
+                    }
+                }
+            } else System.out.println((char) 27 + "[31mSalad not found");
+    }
 }

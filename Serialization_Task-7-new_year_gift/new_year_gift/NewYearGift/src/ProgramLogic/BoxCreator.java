@@ -36,6 +36,11 @@ public class BoxCreator {
         return logician.getSweetBySugarInterval(sweetsBox, from, to);
     }
 
+    public void removeConfections(SweetsBox sweetsBox, String name, int amount){
+        confectioner.removeConfections(sweetsBox, name, amount);
+    }
+
+
     private class Logician {
 
         private Confection getSweetBySugarInterval(SweetsBox sweetsBox, double from, double to) {
@@ -94,5 +99,19 @@ public class BoxCreator {
             } else System.out.println((char) 27 + "[31mSweetsBox not found");
             return sweetsBox;
         }
+
+        private void removeConfections(SweetsBox sweetsBox, String name, int amount){
+            if (sweetsBox.isExist()) {
+                while (amount > 0) {
+                    for (Confection confection : sweetsBox.getSweets()) {
+                        if (confection.getName().equalsIgnoreCase(name)) {
+                            sweetsBox.getSweets().remove(confection);
+                            amount--;
+                        }
+                    }
+                }
+            } else System.out.println((char) 27 + "[31mSweetsBox not found");
+        }
+
     }
 }
